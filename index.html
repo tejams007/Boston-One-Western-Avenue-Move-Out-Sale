@@ -15,101 +15,51 @@
     --muted:#6b7280;
     --line:#e5e7eb;
     --accent:#1e40ff;
-    --accent-soft:#e8edff;
     --good:#dcfce7;
     --good-ink:#166534;
     --pill:#f3f4f6;
-    --pill-ink:#111111;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  .hero{
-    background:#0b0b0c;color:#fff;text-align:center;
-    padding:64px 20px 72px;
-  }
-  .hero h1{
-    font-size:clamp(40px,6vw,72px);
-    font-weight:800;letter-spacing:-.02em;margin:0 0 14px;
-  }
-  .hero p{
-    margin:0;color:#cfcfd2;font-size:15px;font-weight:500;
-  }
+  .hero{background:#0b0b0c;color:#fff;text-align:center;padding:64px 20px 72px}
+  .hero h1{font-size:clamp(40px,6vw,72px);font-weight:800;letter-spacing:-.02em;margin:0 0 14px}
+  .hero p{margin:0;color:#cfcfd2;font-size:15px;font-weight:500}
   .hero p .dot{margin:0 8px;opacity:.6}
   .hero p a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
   .hero p a:hover{border-bottom-color:#fff}
 
-  .nav{
-    position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);
-  }
-  .nav-inner{
-    max-width:1200px;margin:0 auto;padding:14px 20px;
-    display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
-  }
-  .nav a{
-    text-decoration:none;color:var(--ink);background:var(--pill);
-    padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;
-    border:1px solid transparent;transition:background .15s,border-color .15s;
-    white-space:nowrap;
-  }
+  .nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .nav a{text-decoration:none;color:var(--ink);background:var(--pill);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;border:1px solid transparent;transition:background .15s,border-color .15s;white-space:nowrap}
   .nav a:hover{background:#e9eaee;border-color:var(--line)}
 
   main{max-width:1200px;margin:0 auto;padding:32px 20px 80px}
 
-  section{margin:36px 0 8px}
-  .section-head{
-    display:flex;align-items:end;justify-content:space-between;gap:16px;
-    border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px;
-  }
+  section{margin:36px 0 8px;scroll-margin-top:80px}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px}
   .section-head h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
   .section-head .count{color:var(--muted);font-size:14px;font-weight:500}
 
-  .grid{
-    display:grid;gap:18px;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  }
+  .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
 
-  .card{
-    background:var(--card);border:1px solid var(--line);border-radius:14px;
-    overflow:hidden;display:flex;flex-direction:column;
-    transition:box-shadow .15s,transform .15s;
-  }
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s,transform .15s}
   .card:hover{box-shadow:0 6px 24px rgba(0,0,0,.06);transform:translateY(-1px)}
-  .thumb{
-    aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;
-    border-bottom:1px solid var(--line);overflow:hidden;
-  }
+  .thumb{aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
   .thumb img{width:100%;height:100%;object-fit:contain;padding:12px}
-  .badge{
-    display:inline-block;background:var(--accent);color:#fff;text-transform:uppercase;
-    font-size:11px;font-weight:700;letter-spacing:.06em;
-    padding:6px 12px;border-radius:999px;
-  }
+  .badge{display:inline-block;background:var(--accent);color:#fff;text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:.06em;padding:6px 12px;border-radius:999px}
   .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
   .body h3{margin:2px 0 0;font-size:16px;font-weight:600;line-height:1.3}
   .price-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .price{font-size:22px;font-weight:800;letter-spacing:-.01em}
   .orig{color:var(--muted);text-decoration:line-through;font-size:14px;font-weight:500}
-  .disc{
-    background:var(--good);color:var(--good-ink);font-weight:700;font-size:12px;
-    padding:3px 8px;border-radius:6px;
-  }
-  .listing{
-    margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;
-    padding:10px 12px;border:1px solid var(--line);border-radius:10px;
-    text-decoration:none;color:var(--ink);font-size:13px;font-weight:600;
-    transition:background .15s,border-color .15s;
-  }
+  .disc{background:var(--good);color:var(--good-ink);font-weight:700;font-size:12px;padding:3px 8px;border-radius:6px}
+  .listing{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);font-size:13px;font-weight:600;transition:background .15s,border-color .15s}
   .listing:hover{background:#fafafa;border-color:#d1d5db}
 
-  .empty{
-    color:var(--muted);font-size:14px;padding:24px;border:1px dashed var(--line);
-    border-radius:12px;text-align:center;background:#fff;
-  }
+  .empty{color:var(--muted);font-size:14px;padding:24px;border:1px dashed var(--line);border-radius:12px;text-align:center;background:#fff}
 
-  footer{
-    text-align:center;color:var(--muted);font-size:13px;padding:32px 20px 48px;
-  }
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:32px 20px 48px}
 </style>
 </head>
 <body>
@@ -123,171 +73,147 @@
   </p>
 </header>
 
-<nav class="nav" aria-label="Categories">
-  <div class="nav-inner">
-    <a href="#living">🛋️ Living</a>
-    <a href="#dining">🍽️ Dining &amp; Kitchen</a>
-    <a href="#work">🖥️ Work</a>
-    <a href="#bedroom">🛏️ Bedroom</a>
-    <a href="#others">📦 Others</a>
-  </div>
-</nav>
+<nav class="nav" aria-label="Categories"><div class="nav-inner" id="nav-pills"></div></nav>
 
-<main>
+<main id="sections"></main>
 
-  <!-- ============ LIVING ============ -->
-  <section id="living">
-    <div class="section-head">
-      <h2>🛋️ Living</h2>
-      <span class="count" data-count-for="living">0 items</span>
-    </div>
-    <div class="grid" data-grid="living">
-      <article class="card">
-        <a class="thumb" href="https://www.amazon.com/dp/B0CMDHXZF8" target="_blank" rel="noopener">
-          <img src="https://m.media-amazon.com/images/I/815h+HlZe7L._AC_SL1500_.jpg" alt="INSIGNIA 58-inch LED 4K UHD Smart Fire TV" />
-        </a>
-        <div class="body">
-          <span class="badge">Living</span>
-          <h3>INSIGNIA 58&quot; LED 4K UHD Smart Fire TV</h3>
-          <div class="price-row">
-            <span class="price">$190</span>
-            <span class="orig">$276</span>
-            <span class="disc">-31%</span>
-          </div>
-          <a class="listing" href="https://www.amazon.com/dp/B0CMDHXZF8" target="_blank" rel="noopener">
-            View original listing ↗
-          </a>
-        </div>
-      </article>
-    </div>
-  </section>
+<footer>Pickup only · One Western Avenue #350 · Text to coordinate</footer>
 
-  <!-- ============ DINING & KITCHEN ============ -->
-  <section id="dining">
-    <div class="section-head">
-      <h2>🍽️ Dining &amp; Kitchen</h2>
-      <span class="count" data-count-for="dining">0 items</span>
-    </div>
-    <div class="grid" data-grid="dining">
-      <article class="card">
-        <a class="thumb" href="https://www.amazon.com/dp/B09SYYRN6P" target="_blank" rel="noopener">
-          <img src="https://m.media-amazon.com/images/I/815D2Pd2kCL._AC_SL1500_.jpg" alt="Kitchen Cart Cabinet" />
-        </a>
-        <div class="body">
-          <span class="badge">Dining &amp; Kitchen</span>
-          <h3>Kitchen Cart Cabinet</h3>
-          <div class="price-row">
-            <span class="price">$40</span>
-            <span class="orig">$87.99</span>
-            <span class="disc">-55%</span>
-          </div>
-          <a class="listing" href="https://www.amazon.com/dp/B09SYYRN6P" target="_blank" rel="noopener">
-            View original listing ↗
-          </a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ============ WORK ============ -->
-  <section id="work">
-    <div class="section-head">
-      <h2>🖥️ Work</h2>
-      <span class="count" data-count-for="work">0 items</span>
-    </div>
-    <div class="grid" data-grid="work">
-      <article class="card">
-        <a class="thumb" href="https://www.amazon.com/dp/B096MXR34N" target="_blank" rel="noopener">
-          <img src="https://m.media-amazon.com/images/I/81xrHN1BYFL._AC_SL1500_.jpg" alt="2× Dell Monitor" />
-        </a>
-        <div class="body">
-          <span class="badge">Work</span>
-          <h3>2× Dell Monitor</h3>
-          <div class="price-row">
-            <span class="price">$150</span>
-            <span class="orig">$231</span>
-            <span class="disc">-35%</span>
-          </div>
-          <a class="listing" href="https://www.amazon.com/dp/B096MXR34N" target="_blank" rel="noopener">
-            View original listing ↗
-          </a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ============ BEDROOM ============ -->
-  <section id="bedroom">
-    <div class="section-head">
-      <h2>🛏️ Bedroom</h2>
-      <span class="count" data-count-for="bedroom">0 items</span>
-    </div>
-    <div class="grid" data-grid="bedroom">
-      <div class="empty">No items yet — add cards here.</div>
-    </div>
-  </section>
-
-  <!-- ============ OTHERS ============ -->
-  <section id="others">
-    <div class="section-head">
-      <h2>📦 Others</h2>
-      <span class="count" data-count-for="others">0 items</span>
-    </div>
-    <div class="grid" data-grid="others">
-      <article class="card">
-        <a class="thumb" href="https://www.amazon.com/dp/B00PCN4UVU" target="_blank" rel="noopener">
-          <img src="https://m.media-amazon.com/images/I/51+VDKV8DaL._AC_SL1500_.jpg" alt="Sunlight Therapy Lamp" />
-        </a>
-        <div class="body">
-          <span class="badge">Others</span>
-          <h3>Sunlight Therapy Lamp</h3>
-          <div class="price-row">
-            <span class="price">$80</span>
-            <span class="orig">$119.99</span>
-            <span class="disc">-33%</span>
-          </div>
-          <a class="listing" href="https://www.amazon.com/dp/B00PCN4UVU" target="_blank" rel="noopener">
-            View original listing ↗
-          </a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  Pickup only · One Western Avenue #350 · Text to coordinate
-</footer>
-
-<!--
-  =====================================================
-  HOW TO ADD AN ITEM
-  =====================================================
-  Copy this template inside the <div class="grid" data-grid="..."> for the
-  category you want, replacing the <div class="empty">...</div> placeholder.
-
-  <article class="card">
-    <a class="thumb" href="LISTING_URL" target="_blank" rel="noopener">
-      <img src="IMAGE_URL" alt="ITEM NAME" />
-    </a>
-    <div class="body">
-      <span class="badge">CATEGORY LABEL</span>
-      <h3>ITEM NAME</h3>
-      <div class="price-row">
-        <span class="price">$NEW</span>
-        <span class="orig">$ORIG</span>
-        <span class="disc">-XX%</span>
-      </div>
-      <a class="listing" href="LISTING_URL" target="_blank" rel="noopener">
-        View original listing ↗
-      </a>
-    </div>
-  </article>
--->
-
+<!-- ========================================================
+     DATA — edit ITEMS to add/remove items. Mirror items.xlsx.
+     Source of truth: items.xlsx (in the same folder)
+     Categories: Living | Dining & Kitchen | Work | Bedroom | Others
+     ======================================================== -->
 <script>
-  // Auto-update item counts and hide empty placeholders when items exist.
-  document.querySelectorAll('[data-grid]').forEach(grid => {
-    const id = grid.getAttribute('data-grid');
-    
+  const CATEGORIES = [
+    { id: "living",  label: "Living",            emoji: "🛋️" },
+    { id: "dining",  label: "Dining & Kitchen",  emoji: "🍽️" },
+    { id: "work",    label: "Work",              emoji: "🖥️" },
+    { id: "bedroom", label: "Bedroom",           emoji: "🛏️" },
+    { id: "others",  label: "Others",            emoji: "📦" },
+  ];
+
+  const ITEMS = [
+    {
+      category: "Living",
+      name: "INSIGNIA 58\" LED 4K UHD Smart Fire TV",
+      price: 150,
+      original: 276,
+      listing: "https://www.amazon.com/dp/B0CMDHXZF8",
+      image:   "https://m.media-amazon.com/images/I/815h+HlZe7L._AC_SL1500_.jpg"
+    },
+    {
+      category: "Dining & Kitchen",
+      name: "Kitchen Cart Cabinet",
+      price: 40,
+      original: 87.99,
+      listing: "https://www.amazon.com/dp/B09SYYRN6P",
+      image:   "https://m.media-amazon.com/images/I/815D2Pd2kCL._AC_SL1500_.jpg"
+    },
+    {
+      category: "Work",
+      name: "2× Dell Monitor",
+      price: 150,
+      original: 231,
+      listing: "https://www.amazon.com/dp/B096MXR34N",
+      image:   "https://m.media-amazon.com/images/I/81xrHN1BYFL._AC_SL1500_.jpg"
+    },
+    {
+      category: "Others",
+      name: "Sunlight Therapy Lamp",
+      price: 80,
+      original: 119.99,
+      listing: "https://www.amazon.com/dp/B00PCN4UVU",
+      image:   "https://m.media-amazon.com/images/I/51+VDKV8DaL._AC_SL1500_.jpg"
+    },
+    {
+      category: "Others",
+      name: "Wall Art — Flourish of Spring",
+      price: 80,
+      original: 122.99,
+      listing: "https://www.wayfair.com/decor-pillows/pdp/andover-mills-flourish-of-spring-by-timothy-o-toole-painting-print-on-canvas-w004995523.html?piid=288806472%2C341022279%2C341626477",
+      image:   "https://assets.wfcdn.com/im/73296134/resize-h800-p1-w800%5Ecompr-r85/2320/232039390/%22+Flourish+Of+Spring+%22+by+Timothy+O%27+Toole-288806472-341022279-341626477.jpg"
+    }
+  ];
+</script>
+
+<!-- ============ RENDERER ============ -->
+<script>
+  const fmt = n => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
+  const discPct = (p, o) => Math.round((1 - p / o) * 100);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  // Normalize so "Living Room", "living", etc. all map to a category id.
+  function categoryId(label) {
+    const norm = String(label || "").toLowerCase().trim();
+    for (const c of CATEGORIES) {
+      if (norm === c.label.toLowerCase()) return c.id;
+    }
+    if (norm.startsWith("living")) return "living";
+    if (norm.includes("dining") || norm.includes("kitchen")) return "dining";
+    if (norm.includes("work") || norm.includes("office") || norm.includes("desk")) return "work";
+    if (norm.includes("bed")) return "bedroom";
+    return "others";
+  }
+
+  // Build nav pills
+  const nav = document.getElementById("nav-pills");
+  CATEGORIES.forEach(c => {
+    const a = document.createElement("a");
+    a.href = "#" + c.id;
+    a.textContent = `${c.emoji} ${c.label}`;
+    nav.appendChild(a);
+  });
+
+  // Build sections
+  const sectionsEl = document.getElementById("sections");
+  CATEGORIES.forEach(c => {
+    const items = ITEMS.filter(it => categoryId(it.category) === c.id);
+    const section = document.createElement("section");
+    section.id = c.id;
+
+    const head = document.createElement("div");
+    head.className = "section-head";
+    head.innerHTML = `<h2>${c.emoji} ${esc(c.label)}</h2><span class="count">${items.length} item${items.length === 1 ? "" : "s"}</span>`;
+    section.appendChild(head);
+
+    const grid = document.createElement("div");
+    grid.className = "grid";
+
+    if (items.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "No items yet.";
+      grid.appendChild(empty);
+    } else {
+      items.forEach(it => {
+        const card = document.createElement("article");
+        card.className = "card";
+        const d = (it.original && it.price) ? discPct(it.price, it.original) : null;
+        card.innerHTML = `
+          <a class="thumb" href="${esc(it.listing)}" target="_blank" rel="noopener">
+            <img src="${esc(it.image)}" alt="${esc(it.name)}" loading="lazy" />
+          </a>
+          <div class="body">
+            <span class="badge">${esc(c.label)}</span>
+            <h3>${esc(it.name)}</h3>
+            <div class="price-row">
+              <span class="price">${fmt(it.price)}</span>
+              ${it.original ? `<span class="orig">${fmt(it.original)}</span>` : ""}
+              ${d !== null && d > 0 ? `<span class="disc">-${d}%</span>` : ""}
+            </div>
+            <a class="listing" href="${esc(it.listing)}" target="_blank" rel="noopener">
+              View original listing ↗
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+    section.appendChild(grid);
+    sectionsEl.appendChild(section);
+  });
+</script>
+
+</body>
+</html>
