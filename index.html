@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>OWA Move-Out Sale</title>
+<title>OWA Move Out Sale</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -72,13 +72,32 @@
 
   .empty{color:var(--muted);font-size:14px;padding:24px;border:1px dashed var(--line);border-radius:12px;text-align:center;background:#fff}
 
+  /* Summary view */
+  .summary{margin-top:16px}
+  .summary h2{margin:0 0 8px;font-size:22px;font-weight:700;letter-spacing:-.01em}
+  .summary .sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .summary-cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-bottom:24px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .stat .l{color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+  .stat .v{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-top:4px}
+  .stat .h{color:var(--good-ink);font-size:13px;font-weight:600;margin-top:4px}
+  .summary-table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px}
+  table.summary-table{width:100%;border-collapse:collapse;font-size:14px}
+  table.summary-table th,table.summary-table td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  table.summary-table th:first-child,table.summary-table td:first-child{text-align:left}
+  table.summary-table thead th{background:#fafafa;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+  table.summary-table tbody tr:last-child td{border-bottom:none}
+  table.summary-table tfoot td{font-weight:800;background:#fafafa;border-top:2px solid var(--ink)}
+  table.summary-table .cat-dot{display:inline-block;width:10px;height:10px;border-radius:999px;vertical-align:middle;margin-right:8px}
+  table.summary-table .pct{color:var(--good-ink);font-weight:700}
+
   footer{text-align:center;color:var(--muted);font-size:13px;padding:32px 20px 48px}
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <h1>OWA Move-Out Sale</h1>
+  <h1>OWA Move Out Sale</h1>
   <p>
     Available for pickup at One Western Avenue #350
     <span class="dot">·</span>
@@ -88,7 +107,10 @@
 
 <nav class="nav" aria-label="Categories"><div class="nav-inner" id="nav-pills"></div></nav>
 
-<main id="sections"></main>
+<main>
+  <div id="summary-panel" class="summary" style="display:none"></div>
+  <div id="sections"></div>
+</main>
 
 <footer>Pickup only · One Western Avenue #350 · Text to coordinate</footer>
 
@@ -160,13 +182,89 @@
     document.querySelectorAll(".pill").forEach(p => {
       p.classList.toggle("active", p.dataset.filter === activeFilter);
     });
-    document.querySelectorAll("section[data-section]").forEach(s => {
-      const show = (activeFilter === "all") || (s.dataset.section === activeFilter);
-      s.style.display = show ? "" : "none";
-    });
+    const sectionsWrap = document.getElementById("sections");
+    const summaryPanel = document.getElementById("summary-panel");
+    if (activeFilter === "summary") {
+      sectionsWrap.style.display = "none";
+      summaryPanel.style.display = "";
+      renderSummary();
+    } else {
+      sectionsWrap.style.display = "";
+      summaryPanel.style.display = "none";
+      document.querySelectorAll("section[data-section]").forEach(s => {
+        const show = (activeFilter === "all") || (s.dataset.section === activeFilter);
+        s.style.display = show ? "" : "none";
+      });
+    }
   }
 
-  // Build nav: All + each category, with item counts
+  function renderSummary() {
+    const panel = document.getElementById("summary-panel");
+    const rows = CATEGORIES.map(c => {
+      const items = ITEMS.filter(it => categoryId(it.category) === c.id);
+      const sell = items.reduce((s, it) => s + (it.price || 0), 0);
+      const orig = items.reduce((s, it) => s + (it.original || 0), 0);
+      const save = orig - sell;
+      const pct = orig > 0 ? Math.round((1 - sell / orig) * 100) : 0;
+      return { c, count: items.length, sell, orig, save, pct };
+    });
+    const tot = rows.reduce((a, r) => ({
+      count: a.count + r.count,
+      sell:  a.sell  + r.sell,
+      orig:  a.orig  + r.orig,
+    }), { count: 0, sell: 0, orig: 0 });
+    tot.save = tot.orig - tot.sell;
+    tot.pct  = tot.orig > 0 ? Math.round((1 - tot.sell / tot.orig) * 100) : 0;
+
+    const tableRows = rows.map(r => `
+      <tr>
+        <td><span class="cat-dot" style="background:${r.c.color}"></span>${r.c.emoji} ${esc(r.c.label)}</td>
+        <td>${r.count}</td>
+        <td>${fmt(r.sell)}</td>
+        <td>${fmt(r.orig)}</td>
+        <td>${fmt(r.save)}</td>
+        <td class="pct">-${r.pct}%</td>
+      </tr>`).join("");
+
+    panel.innerHTML = `
+      <h2>📊 Summary</h2>
+
+      <div class="summary-cards">
+        <div class="stat"><div class="l">Items</div><div class="v">${tot.count}</div></div>
+        <div class="stat"><div class="l">Selling Price Total</div><div class="v">${fmt(tot.sell)}</div></div>
+        <div class="stat"><div class="l">Original Price Total</div><div class="v">${fmt(tot.orig)}</div></div>
+        <div class="stat"><div class="l">Discount Total</div><div class="v">${fmt(tot.save)}</div><div class="h">−${tot.pct}% off retail</div></div>
+      </div>
+
+      <div class="summary-table-wrap">
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Items</th>
+              <th>Selling Price Total</th>
+              <th>Original Price Total</th>
+              <th>Discount Total</th>
+              <th>Discount %</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+          <tfoot>
+            <tr>
+              <td>Total</td>
+              <td>${tot.count}</td>
+              <td>${fmt(tot.sell)}</td>
+              <td>${fmt(tot.orig)}</td>
+              <td>${fmt(tot.save)}</td>
+              <td class="pct">-${tot.pct}%</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    `;
+  }
+
+  // Build nav: All + each category + Summary
   const nav = document.getElementById("nav-pills");
   const totalCount = ITEMS.length;
   nav.appendChild(makePill("all", "🏷️ All", totalCount));
@@ -174,13 +272,15 @@
     const count = ITEMS.filter(it => categoryId(it.category) === c.id).length;
     nav.appendChild(makePill(c.id, c.emoji + " " + c.label, count));
   });
+  nav.appendChild(makePill("summary", "📊 Summary", null));
 
   function makePill(id, label, count) {
     const b = document.createElement("button");
     b.type = "button";
     b.className = "pill";
     b.dataset.filter = id;
-    b.innerHTML = esc(label) + ' <span class="badge-count">' + count + '</span>';
+    const countHtml = (count != null) ? ' <span class="badge-count">' + count + '</span>' : '';
+    b.innerHTML = esc(label) + countHtml;
     b.onclick = () => setFilter(id);
     return b;
   }
