@@ -94,11 +94,11 @@
 
 <script>
   const CATEGORIES = [
-    { id: "living",  label: "Living",            emoji: "🛋️" },
-    { id: "dining",  label: "Dining & Kitchen",  emoji: "🍽️" },
-    { id: "work",    label: "Work",              emoji: "🖥️" },
-    { id: "bedroom", label: "Bedroom",           emoji: "🛏️" },
-    { id: "others",  label: "Others",            emoji: "📦" }
+    { id: "living",  label: "Living",            emoji: "🛋️", color: "#1e40ff" },
+    { id: "dining",  label: "Dining & Kitchen",  emoji: "🍽️", color: "#ea580c" },
+    { id: "work",    label: "Work",              emoji: "🖥️", color: "#0d9488" },
+    { id: "bedroom", label: "Bedroom",           emoji: "🛏️", color: "#9333ea" },
+    { id: "others",  label: "Others",            emoji: "📦" , color: "#525252" }
   ];
 
   const ITEMS = [
@@ -124,8 +124,8 @@
     { category: "Others",           name: "Sunlight Therapy Lamp",                         price: 60,  original: 127.49, listing: "https://www.amazon.com/dp/B00PCN4UVU", image: "https://m.media-amazon.com/images/I/51+VDKV8DaL._AC_SL1500_.jpg" },
     { category: "Others",           name: "Wall Art — Flourish of Spring",                 price: 50,  original: 122.99, listing: "https://www.wayfair.com/decor-pillows/pdp/andover-mills-flourish-of-spring-by-timothy-o-toole-painting-print-on-canvas-w004995523.html?piid=288806472%2C341022279%2C341626477", image: "https://assets.wfcdn.com/im/73296134/resize-h800-p1-w800%5Ecompr-r85/2320/232039390/%22+Flourish+Of+Spring+%22+by+Timothy+O%27+Toole-288806472-341022279-341626477.jpg" },
     { category: "Others",           name: "Trash Can (Brightroom) — 45L Slim Step",        price: 25,  original: 55,     listing: "https://www.target.com/p/45l-slim-step-trash-can-brightroom-8482/-/A-83279849", image: "https://target.scene7.com/is/image/Target/GUEST_274940b3-1047-40c3-aa3a-4c1d8f8a78d2?wid=1200&hei=1200&qlt=80" },
-    { category: "Others",           name: "Floor Lamp",                                    price: 20,  original: 47.80,  listing: "https://www.amazon.com/dp/B09F9B3BCY", image: "" },
-    { category: "Others",           name: "Floor Lamp with Shelves",                       price: 20,  original: 42.49,  listing: "https://www.amazon.com/dp/B086ZLGLV3", image: "" }
+    { category: "Others",           name: "Floor Lamp with Shelves",                       price: 20,  original: 47.80,  listing: "https://www.amazon.com/dp/B09F9B3BCY", image: "https://m.media-amazon.com/images/I/61IzUdfkdFL._AC_SL1500_.jpg" },
+    { category: "Others",           name: "Floor Lamp",                                    price: 20,  original: 42.49,  listing: "https://www.amazon.com/dp/B086ZLGLV3", image: "https://m.media-amazon.com/images/I/61pJwYkeP9L._AC_SL1001_.jpg" }
   ];
 </script>
 
@@ -224,7 +224,7 @@
         card.innerHTML =
           thumb +
           '<div class="body">' +
-            '<span class="badge">' + esc(c.label) + '</span>' +
+            '<span class="badge" style="background:' + c.color + '">' + esc(c.label) + '</span>' +
             '<h3>' + esc(it.name) + '</h3>' +
             '<div class="price-row">' +
               '<span class="price">' + fmt(it.price) + '</span>' +
