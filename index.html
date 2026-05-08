@@ -22,6 +22,7 @@
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:inherit}
+  button{font-family:inherit}
   .hero{background:#0b0b0c;color:#fff;text-align:center;padding:64px 20px 72px}
   .hero h1{font-size:clamp(40px,6vw,72px);font-weight:800;letter-spacing:-.02em;margin:0 0 14px}
   .hero p{margin:0;color:#cfcfd2;font-size:15px;font-weight:500}
@@ -31,8 +32,20 @@
 
   .nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
   .nav-inner{max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-  .nav a{text-decoration:none;color:var(--ink);background:var(--pill);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;border:1px solid transparent;transition:background .15s,border-color .15s;white-space:nowrap}
-  .nav a:hover{background:#e9eaee;border-color:var(--line)}
+  .pill{
+    cursor:pointer;color:var(--ink);background:var(--pill);
+    padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;
+    border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;
+    white-space:nowrap;
+  }
+  .pill:hover{background:#e9eaee;border-color:var(--line)}
+  .pill.active{background:#0b0b0c;color:#fff;border-color:#0b0b0c}
+  .pill.active:hover{background:#000}
+  .pill .badge-count{
+    display:inline-block;margin-left:6px;font-size:11px;font-weight:700;
+    background:rgba(0,0,0,.08);color:inherit;padding:1px 7px;border-radius:999px;
+  }
+  .pill.active .badge-count{background:rgba(255,255,255,.18);color:#fff}
 
   main{max-width:1200px;margin:0 auto;padding:32px 20px 80px}
 
@@ -45,7 +58,7 @@
 
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s,transform .15s}
   .card:hover{box-shadow:0 6px 24px rgba(0,0,0,.06);transform:translateY(-1px)}
-  .thumb{aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
+  .thumb{aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden;color:var(--muted);font-size:13px}
   .thumb img{width:100%;height:100%;object-fit:contain;padding:12px}
   .badge{display:inline-block;background:var(--accent);color:#fff;text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:.06em;padding:6px 12px;border-radius:999px}
   .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
@@ -103,13 +116,16 @@
     { category: "Work",             name: "Standing Desk — Adjustable Height",             price: 120, original: 276.24, listing: "https://www.wayfair.com/furniture/pdp/inbox-zero-emanuiel-height-adjustable-standing-gaming-desk-w007719602.html?piid=942113954", image: "https://assets.wfcdn.com/im/83408579/resize-h1200-p1-w1200%5Ecompr-r85/2865/286583680/Emanuiel+Height+Adjustable+Standing+Gaming+Desk-942113954.jpg" },
     { category: "Work",             name: "Office Chair with Padded Arms",                 price: 80,  original: 180.61, listing: "https://www.wayfair.com/furniture/pdp/upper-square-kalman-mid-back-leathersoft-executive-swivel-office-chair-with-padded-arms-w006631778.html?piid=1511468187", image: "https://assets.wfcdn.com/im/15284301/resize-h800-p1-w800%5Ecompr-r85/2764/276491894/Kalman+Mid-Back+LeatherSoft+Executive+Swivel+Office+Chair+with+Padded+Arms-1511468187.jpg" },
     { category: "Bedroom",          name: "Dresser",                                       price: 50,  original: 115.80, listing: "https://www.wayfair.com/furniture/pdp/17-stories-forestine-12-drawer-dresser-for-bedroom-w100348196.html?piid=1793041553", image: "https://assets.wfcdn.com/im/47834771/resize-h800-p1-w800%5Ecompr-r85/3583/358304207/Forestine+12-Drawer+Dresser-1793041553.jpg" },
+    { category: "Bedroom",          name: "Wardrobe — 2 Doors, White",                     price: 100, original: 299.99, listing: "https://www.ikea.com/us/en/p/vihals-wardrobe-with-2-doors-white-20483257/", image: "https://www.ikea.com/us/en/images/products/vihals-wardrobe-with-2-doors-white__1070907_pe854805_s5.jpg?f=xl" },
     { category: "Bedroom",          name: "Bed Frame — Full/Double",                       price: 65,  original: 152.99, listing: "https://www.wayfair.com/furniture/pdp/17-stories-tharsiga-bed-frame-w009580236.html?piid=1518619331", image: "https://assets.wfcdn.com/im/08527123/resize-h800-p1-w800%5Ecompr-r85/2186/218685387/Tharsiga+Upholstered+Bed-1518619331.jpg" },
     { category: "Bedroom",          name: "Mattress — 9\" Full XL",                        price: 150, original: 403.74, listing: "https://www.wayfair.com/bed-bath/pdp/white-noise-10-inch-medium-plush-pillowtop-innerspring-mattress-w004342109.html?piid=1062180588%2C996683342", image: "https://assets.wfcdn.com/im/23922989/resize-h800-p1-w800%5Ecompr-r85/4388/438824515/10-Inch+Medium+Plush+Pillowtop+Innerspring+Mattress-1062180588-996683342.jpg" },
-    { category: "Others",           name: "PlayStation 5 Console (slim)",                  price: 250, original: 531.24, listing: "https://www.amazon.com/dp/B0CL61F39H", image: "https://m.media-amazon.com/images/I/61OFeihbEZL._SL1500_.jpg" },
-    { category: "Others",           name: "3 x PlayStation DualSense Wireless Controller", price: 70,  original: 238.99, listing: "https://www.amazon.com/dp/B0CQKKNLKH", image: "https://m.media-amazon.com/images/I/61yU5LP9zXL._SL1500_.jpg" },
+    { category: "Others",           name: "PlayStation 5 Console (slim)",                  price: 400, original: 531.24, listing: "https://www.amazon.com/dp/B0CL61F39H", image: "https://m.media-amazon.com/images/I/61OFeihbEZL._SL1500_.jpg" },
+    { category: "Others",           name: "3 x PlayStation DualSense Wireless Controller", price: 50,  original: 238.99, listing: "https://www.amazon.com/dp/B0CQKKNLKH", image: "https://m.media-amazon.com/images/I/61yU5LP9zXL._SL1500_.jpg" },
     { category: "Others",           name: "Sunlight Therapy Lamp",                         price: 60,  original: 127.49, listing: "https://www.amazon.com/dp/B00PCN4UVU", image: "https://m.media-amazon.com/images/I/51+VDKV8DaL._AC_SL1500_.jpg" },
     { category: "Others",           name: "Wall Art — Flourish of Spring",                 price: 50,  original: 122.99, listing: "https://www.wayfair.com/decor-pillows/pdp/andover-mills-flourish-of-spring-by-timothy-o-toole-painting-print-on-canvas-w004995523.html?piid=288806472%2C341022279%2C341626477", image: "https://assets.wfcdn.com/im/73296134/resize-h800-p1-w800%5Ecompr-r85/2320/232039390/%22+Flourish+Of+Spring+%22+by+Timothy+O%27+Toole-288806472-341022279-341626477.jpg" },
-    { category: "Others",           name: "Trash Can (Brightroom) — 45L Slim Step",        price: 25,  original: 55,     listing: "https://www.target.com/p/45l-slim-step-trash-can-brightroom-8482/-/A-83279849", image: "https://target.scene7.com/is/image/Target/GUEST_274940b3-1047-40c3-aa3a-4c1d8f8a78d2?wid=1200&hei=1200&qlt=80" }
+    { category: "Others",           name: "Trash Can (Brightroom) — 45L Slim Step",        price: 25,  original: 55,     listing: "https://www.target.com/p/45l-slim-step-trash-can-brightroom-8482/-/A-83279849", image: "https://target.scene7.com/is/image/Target/GUEST_274940b3-1047-40c3-aa3a-4c1d8f8a78d2?wid=1200&hei=1200&qlt=80" },
+    { category: "Others",           name: "Floor Lamp",                                    price: 20,  original: 47.80,  listing: "https://www.amazon.com/dp/B09F9B3BCY", image: "" },
+    { category: "Others",           name: "Floor Lamp with Shelves",                       price: 20,  original: 42.49,  listing: "https://www.amazon.com/dp/B086ZLGLV3", image: "" }
   ];
 </script>
 
@@ -130,19 +146,51 @@
     return "others";
   }
 
+  // Filter state — persists across reloads.
+  let activeFilter = localStorage.getItem("owa-filter") || "all";
+
+  function setFilter(id) {
+    activeFilter = id;
+    try { localStorage.setItem("owa-filter", id); } catch(e) {}
+    applyFilter();
+  }
+
+  function applyFilter() {
+    document.querySelectorAll(".pill").forEach(p => {
+      p.classList.toggle("active", p.dataset.filter === activeFilter);
+    });
+    document.querySelectorAll("section[data-section]").forEach(s => {
+      const show = (activeFilter === "all") || (s.dataset.section === activeFilter);
+      s.style.display = show ? "" : "none";
+    });
+  }
+
+  // Build nav: All + each category, with item counts
   const nav = document.getElementById("nav-pills");
+  const totalCount = ITEMS.length;
+  nav.appendChild(makePill("all", "🏷️ All", totalCount));
   CATEGORIES.forEach(c => {
-    const a = document.createElement("a");
-    a.href = "#" + c.id;
-    a.textContent = c.emoji + " " + c.label;
-    nav.appendChild(a);
+    const count = ITEMS.filter(it => categoryId(it.category) === c.id).length;
+    nav.appendChild(makePill(c.id, c.emoji + " " + c.label, count));
   });
 
+  function makePill(id, label, count) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "pill";
+    b.dataset.filter = id;
+    b.innerHTML = esc(label) + ' <span class="badge-count">' + count + '</span>';
+    b.onclick = () => setFilter(id);
+    return b;
+  }
+
+  // Build sections
   const sectionsEl = document.getElementById("sections");
   CATEGORIES.forEach(c => {
     const items = ITEMS.filter(it => categoryId(it.category) === c.id);
     const section = document.createElement("section");
     section.id = c.id;
+    section.dataset.section = c.id;
 
     const head = document.createElement("div");
     head.className = "section-head";
@@ -162,13 +210,15 @@
         const card = document.createElement("article");
         card.className = "card";
         const d = (it.original && it.price) ? discPct(it.price, it.original) : null;
-        const thumbInner = '<img src="' + esc(it.image) + '" alt="' + esc(it.name) + '" loading="lazy" />';
+        const thumbInner = it.image
+          ? '<img src="' + esc(it.image) + '" alt="' + esc(it.name) + '" loading="lazy" />'
+          : '<span>No image</span>';
         const thumb = it.listing
           ? '<a class="thumb" href="' + esc(it.listing) + '" target="_blank" rel="noopener">' + thumbInner + '</a>'
           : '<div class="thumb">' + thumbInner + '</div>';
         const listingBtn = it.listing
           ? '<a class="listing" href="' + esc(it.listing) + '" target="_blank" rel="noopener">View original listing &#8599;</a>'
-          : "";
+          : '';
         const origHtml = it.original ? '<span class="orig">' + fmt(it.original) + '</span>' : '';
         const discHtml = (d !== null && d > 0) ? '<span class="disc">-' + d + '%</span>' : '';
         card.innerHTML =
@@ -189,6 +239,9 @@
     section.appendChild(grid);
     sectionsEl.appendChild(section);
   });
+
+  // Apply current filter (defaults to "all")
+  applyFilter();
 </script>
 
 </body>
