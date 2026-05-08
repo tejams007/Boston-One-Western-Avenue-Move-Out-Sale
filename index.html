@@ -72,6 +72,36 @@
 
   .empty{color:var(--muted);font-size:14px;padding:24px;border:1px dashed var(--line);border-radius:12px;text-align:center;background:#fff}
 
+  /* Cart / Build Selection view */
+  .cart{margin-top:16px}
+  .cart h2{margin:0 0 4px;font-size:22px;font-weight:700;letter-spacing:-.01em}
+  .cart .sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .cart-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .btn{cursor:pointer;border:1px solid var(--line);background:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--ink);transition:background .15s,border-color .15s}
+  .btn:hover{background:#fafafa;border-color:#d1d5db}
+  .btn.primary{background:#0b0b0c;color:#fff;border-color:#0b0b0c}
+  .btn.primary:hover{background:#000}
+  .cart-empty{padding:18px 20px;background:#fafafa;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:14px;margin-bottom:24px}
+  .picker-hint{color:var(--muted);font-size:13px;margin:18px 0 8px}
+  .picker{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+  .pick{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;transition:background .12s,border-color .12s}
+  .pick:hover{background:#fafafa;border-color:#d1d5db}
+  .pick.checked{background:#f0f4ff;border-color:#bcccff}
+  .pick input{margin:0;width:18px;height:18px;cursor:pointer;accent-color:#0b0b0c;flex-shrink:0}
+  .pick .pick-thumb{width:42px;height:42px;border-radius:8px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+  .pick .pick-thumb img{width:100%;height:100%;object-fit:contain;padding:3px}
+  .pick .pick-thumb.no-img{font-size:9px;color:var(--muted);text-align:center;line-height:1.1;padding:2px}
+  .pick .pick-name{flex:1;font-size:13px;font-weight:600;line-height:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pick .pick-price{font-size:13px;font-weight:700;flex-shrink:0;white-space:nowrap}
+  .picker-cat{margin-top:18px}
+  .picker-cat:first-of-type{margin-top:0}
+  .picker-cat-head{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px}
+  .picker-cat-head .cat-dot{display:inline-block;width:10px;height:10px;border-radius:999px}
+  .selected-row td .row-thumb{width:36px;height:36px;border-radius:6px;border:1px solid var(--line);object-fit:contain;background:#fff;padding:2px;vertical-align:middle;margin-right:10px}
+  .selected-row td .row-name{font-weight:600;display:inline-block;vertical-align:middle}
+  .remove-btn{cursor:pointer;border:none;background:transparent;color:var(--muted);font-size:18px;padding:4px 8px;border-radius:6px;line-height:1}
+  .remove-btn:hover{color:#dc2626;background:#fef2f2}
+
   /* Summary view */
   .summary{margin-top:16px}
   .summary h2{margin:0 0 8px;font-size:22px;font-weight:700;letter-spacing:-.01em}
@@ -88,6 +118,8 @@
   table.summary-table thead th{background:#fafafa;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
   table.summary-table tbody tr:last-child td{border-bottom:none}
   table.summary-table tfoot td{font-weight:800;background:#fafafa;border-top:2px solid var(--ink)}
+  table.summary-table.cart-table thead th:nth-child(2),
+  table.summary-table.cart-table tbody td:nth-child(2){text-align:left}
   table.summary-table .cat-dot{display:inline-block;width:10px;height:10px;border-radius:999px;vertical-align:middle;margin-right:8px}
   table.summary-table .pct{color:var(--good-ink);font-weight:700}
 
@@ -108,6 +140,7 @@
 <nav class="nav" aria-label="Categories"><div class="nav-inner" id="nav-pills"></div></nav>
 
 <main>
+  <div id="cart-panel" class="cart" style="display:none"></div>
   <div id="summary-panel" class="summary" style="display:none"></div>
   <div id="sections"></div>
 </main>
@@ -185,18 +218,167 @@
     });
     const sectionsWrap = document.getElementById("sections");
     const summaryPanel = document.getElementById("summary-panel");
+    const cartPanel    = document.getElementById("cart-panel");
+    sectionsWrap.style.display = "none";
+    summaryPanel.style.display = "none";
+    cartPanel.style.display    = "none";
+
     if (activeFilter === "summary") {
-      sectionsWrap.style.display = "none";
       summaryPanel.style.display = "";
       renderSummary();
+    } else if (activeFilter === "cart") {
+      cartPanel.style.display = "";
+      renderCart();
     } else {
       sectionsWrap.style.display = "";
-      summaryPanel.style.display = "none";
       document.querySelectorAll("section[data-section]").forEach(s => {
         const show = (activeFilter === "all") || (s.dataset.section === activeFilter);
         s.style.display = show ? "" : "none";
       });
     }
+  }
+
+  // ===== Cart =====
+  // Persisted set of selected item names.
+  let selected = new Set();
+  try {
+    const raw = localStorage.getItem("owa-cart");
+    if (raw) selected = new Set(JSON.parse(raw));
+  } catch(e) {}
+
+  function persistCart() {
+    try { localStorage.setItem("owa-cart", JSON.stringify([...selected])); } catch(e) {}
+  }
+
+  function toggleSelect(name, on) {
+    if (on) selected.add(name); else selected.delete(name);
+    persistCart();
+    if (activeFilter === "cart") renderCart();
+    updateCartBadge();
+  }
+
+  function clearCart() {
+    selected.clear();
+    persistCart();
+    if (activeFilter === "cart") renderCart();
+    updateCartBadge();
+  }
+
+  function updateCartBadge() {
+    const pill = document.querySelector('.pill[data-filter="cart"]');
+    if (!pill) return;
+    const cnt = pill.querySelector(".badge-count");
+    if (cnt) cnt.textContent = selected.size;
+  }
+
+  function renderCart() {
+    const panel = document.getElementById("cart-panel");
+    const picked = ITEMS.filter(it => selected.has(it.name));
+    const sell = picked.reduce((s, it) => s + (it.price || 0), 0);
+    const orig = picked.reduce((s, it) => s + (it.original || 0), 0);
+    const save = orig - sell;
+    const pct  = orig > 0 ? Math.round((1 - sell / orig) * 100) : 0;
+
+    const stats = `
+      <div class="summary-cards">
+        <div class="stat"><div class="l">Items Selected</div><div class="v">${picked.length}</div></div>
+        <div class="stat"><div class="l">Selling Price Total</div><div class="v">${fmtWhole(sell)}</div></div>
+        <div class="stat"><div class="l">Original Price Total</div><div class="v">${fmtWhole(orig)}</div></div>
+        <div class="stat"><div class="l">Discount Total</div><div class="v">${fmtWhole(save)}</div><div class="h">${orig > 0 ? '−' + pct + '% off retail' : ''}</div></div>
+      </div>`;
+
+    let selectedTable;
+    if (picked.length === 0) {
+      selectedTable = `<div class="cart-empty">No items selected yet — pick some below to build your list.</div>`;
+    } else {
+      const rows = picked.map(it => {
+        const c = CATEGORIES.find(c => c.id === categoryId(it.category)) || CATEGORIES[CATEGORIES.length - 1];
+        const d = (it.original && it.price) ? discPct(it.price, it.original) : null;
+        const thumb = it.image
+          ? `<img class="row-thumb" src="${esc(it.image)}" alt="" loading="lazy" />`
+          : '';
+        return `
+          <tr class="selected-row">
+            <td>${thumb}<span class="row-name">${esc(it.name)}</span></td>
+            <td><span class="cat-dot" style="background:${c.color}"></span>${esc(c.label)}</td>
+            <td>${fmt(it.price)}</td>
+            <td>${fmtWhole(it.original)}</td>
+            <td class="pct">${d !== null && d > 0 ? '-' + d + '%' : ''}</td>
+            <td><button class="remove-btn" title="Remove" data-remove="${esc(it.name)}">×</button></td>
+          </tr>`;
+      }).join("");
+      selectedTable = `
+        <div class="summary-table-wrap">
+          <table class="summary-table cart-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Selling Price</th>
+                <th>Original Price</th>
+                <th>Discount %</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">Total</td>
+                <td>${fmt(sell)}</td>
+                <td>${fmtWhole(orig)}</td>
+                <td class="pct">${orig > 0 ? '-' + pct + '%' : ''}</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>`;
+    }
+
+    // Picker grouped by category
+    const picker = CATEGORIES.map(c => {
+      const items = ITEMS.filter(it => categoryId(it.category) === c.id);
+      if (items.length === 0) return "";
+      const cards = items.map(it => {
+        const checked = selected.has(it.name);
+        const thumb = it.image
+          ? `<div class="pick-thumb"><img src="${esc(it.image)}" alt="" loading="lazy" /></div>`
+          : `<div class="pick-thumb no-img">No image</div>`;
+        return `
+          <label class="pick${checked ? " checked" : ""}">
+            <input type="checkbox" data-name="${esc(it.name)}"${checked ? " checked" : ""} />
+            ${thumb}
+            <span class="pick-name" title="${esc(it.name)}">${esc(it.name)}</span>
+            <span class="pick-price">${fmt(it.price)}</span>
+          </label>`;
+      }).join("");
+      return `
+        <div class="picker-cat">
+          <div class="picker-cat-head"><span class="cat-dot" style="background:${c.color}"></span>${c.emoji} ${esc(c.label)}</div>
+          <div class="picker">${cards}</div>
+        </div>`;
+    }).join("");
+
+    panel.innerHTML = `
+      <h2>🛒 Build Your Selection</h2>
+      <p class="sub">Tick the items you want — totals update live. Saved in your browser.</p>
+      ${stats}
+      <div class="cart-actions">
+        <button class="btn" id="cart-clear">Clear selection</button>
+      </div>
+      ${selectedTable}
+      <div class="picker-hint">Add items:</div>
+      ${picker}
+    `;
+
+    // Wire up checkboxes
+    panel.querySelectorAll('input[type="checkbox"][data-name]').forEach(cb => {
+      cb.addEventListener("change", e => toggleSelect(e.target.dataset.name, e.target.checked));
+    });
+    panel.querySelectorAll('[data-remove]').forEach(btn => {
+      btn.addEventListener("click", () => toggleSelect(btn.dataset.remove, false));
+    });
+    const clearBtn = panel.querySelector("#cart-clear");
+    if (clearBtn) clearBtn.onclick = clearCart;
   }
 
   function renderSummary() {
@@ -273,7 +455,8 @@
     const count = ITEMS.filter(it => categoryId(it.category) === c.id).length;
     nav.appendChild(makePill(c.id, c.emoji + " " + c.label, count));
   });
-  nav.appendChild(makePill("summary", "📊 Summary", null));
+  nav.appendChild(makePill("cart",    "🛒 Build Cart", selected.size));
+  nav.appendChild(makePill("summary", "📊 Summary",     null));
 
   function makePill(id, label, count) {
     const b = document.createElement("button");
