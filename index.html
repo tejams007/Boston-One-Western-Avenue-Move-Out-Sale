@@ -154,6 +154,7 @@
 
 <script>
   const fmt = n => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
+  const fmtWhole = n => "$" + Math.round(n).toLocaleString("en-US");
   const discPct = (p, o) => Math.round((1 - p / o) * 100);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -220,9 +221,9 @@
       <tr>
         <td><span class="cat-dot" style="background:${r.c.color}"></span>${r.c.emoji} ${esc(r.c.label)}</td>
         <td>${r.count}</td>
-        <td>${fmt(r.sell)}</td>
-        <td>${fmt(r.orig)}</td>
-        <td>${fmt(r.save)}</td>
+        <td>${fmtWhole(r.sell)}</td>
+        <td>${fmtWhole(r.orig)}</td>
+        <td>${fmtWhole(r.save)}</td>
         <td class="pct">-${r.pct}%</td>
       </tr>`).join("");
 
@@ -231,9 +232,9 @@
 
       <div class="summary-cards">
         <div class="stat"><div class="l">Items</div><div class="v">${tot.count}</div></div>
-        <div class="stat"><div class="l">Selling Price Total</div><div class="v">${fmt(tot.sell)}</div></div>
-        <div class="stat"><div class="l">Original Price Total</div><div class="v">${fmt(tot.orig)}</div></div>
-        <div class="stat"><div class="l">Discount Total</div><div class="v">${fmt(tot.save)}</div><div class="h">−${tot.pct}% off retail</div></div>
+        <div class="stat"><div class="l">Selling Price Total</div><div class="v">${fmtWhole(tot.sell)}</div></div>
+        <div class="stat"><div class="l">Original Price Total</div><div class="v">${fmtWhole(tot.orig)}</div></div>
+        <div class="stat"><div class="l">Discount Total</div><div class="v">${fmtWhole(tot.save)}</div><div class="h">−${tot.pct}% off retail</div></div>
       </div>
 
       <div class="summary-table-wrap">
@@ -253,9 +254,9 @@
             <tr>
               <td>Total</td>
               <td>${tot.count}</td>
-              <td>${fmt(tot.sell)}</td>
-              <td>${fmt(tot.orig)}</td>
-              <td>${fmt(tot.save)}</td>
+              <td>${fmtWhole(tot.sell)}</td>
+              <td>${fmtWhole(tot.orig)}</td>
+              <td>${fmtWhole(tot.save)}</td>
               <td class="pct">-${tot.pct}%</td>
             </tr>
           </tfoot>
