@@ -72,6 +72,21 @@
 
   .empty{color:var(--muted);font-size:14px;padding:24px;border:1px dashed var(--line);border-radius:12px;text-align:center;background:#fff}
 
+  /* SOLD treatment */
+  .card.sold{opacity:.6}
+  .card.sold .thumb{position:relative;overflow:hidden}
+  .card.sold .thumb::after{
+    content:"SOLD";position:absolute;top:18px;left:-38px;
+    background:#dc2626;color:#fff;padding:5px 44px;transform:rotate(-22deg);
+    font-weight:800;letter-spacing:.12em;font-size:13px;
+    box-shadow:0 2px 8px rgba(0,0,0,.25);pointer-events:none;
+  }
+  .card.sold .price{text-decoration:line-through;color:var(--muted)}
+  .card.sold .listing{pointer-events:none;opacity:.7}
+  .pick.sold{opacity:.55}
+  .pick.sold input{cursor:not-allowed}
+  .pick .pick-sold-tag{margin-left:auto;color:#dc2626;font-weight:800;font-size:11px;letter-spacing:.06em;flex-shrink:0}
+
   /* Cart / Build Selection view */
   .cart{margin-top:16px}
   .cart h2{margin:0 0 4px;font-size:22px;font-weight:700;letter-spacing:-.01em}
@@ -164,7 +179,7 @@
     { category: "Living",           name: "Coffee Table",                                  price: 60,  original: 123.24, listing: "https://www.wayfair.com/furniture/pdp/red-barrel-studio-aspa-lift-top-solid-coffee-table-with-storage-w004286818.html?piid=1100679075%2C1179625892", image: "https://assets.wfcdn.com/im/91007354/resize-h800-p1-w800%5Ecompr-r85/3687/368704986/Aspa+Single+Coffee+Table-1100679075-1179625892.jpg" },
     { category: "Living",           name: "Bamboo Tree",                                   price: 80,  original: 172.11, listing: "https://www.wayfair.com/home/pdp/freeport-park-72-tall-high-end-realistic-silk-bamboo-tree-in-basket-w004779990.html?piid=1297287915", image: "https://assets.wfcdn.com/im/31527464/resize-h800-p1-w800%5Ecompr-r85/2166/216608714/72%22+Tall+High+End+Realistic+Silk+Bamboo+Tree+in+Basket-1297287915.jpg" },
     { category: "Living",           name: "Decorative Clock",                              price: 25,  original: 59.49,  listing: "", image: "https://assets.wfcdn.com/im/45183503/resize-h85-w85%5Ecompr-r85/2919/291977135/default_name.jpg" },
-    { category: "Dining & Kitchen", name: "Kitchen Cart Cabinet",                          price: 40,  original: 77.45,  listing: "https://www.amazon.com/dp/B09SYYRN6P", image: "https://m.media-amazon.com/images/I/815D2Pd2kCL._AC_SL1500_.jpg" },
+    { category: "Dining & Kitchen", name: "Kitchen Cart Cabinet",                          price: 40,  original: 77.45,  listing: "https://www.amazon.com/dp/B09SYYRN6P", image: "https://m.media-amazon.com/images/I/815D2Pd2kCL._AC_SL1500_.jpg", sold: true },
     { category: "Dining & Kitchen", name: "Microwave Oven (GE) — 1.4 Cu Ft, Black",        price: 70,  original: 201.58, listing: "https://www.amazon.com/dp/B0D295GDXX", image: "https://m.media-amazon.com/images/I/716VW5x3AaL._AC_SL1500_.jpg" },
     { category: "Dining & Kitchen", name: "Air Fryer (Ninja XL) — 6.5 QT",                 price: 55,  original: 138.11, listing: "https://www.amazon.com/dp/B0CS3V8M9H", image: "https://m.media-amazon.com/images/I/719F0KSYZqL._AC_SL1500_.jpg" },
     { category: "Work",             name: "2 x Dell Monitor",                              price: 120, original: 245.80, listing: "https://www.amazon.com/dp/B096MXR34N", image: "https://m.media-amazon.com/images/I/81xrHN1BYFL._AC_SL1500_.jpg" },
@@ -176,7 +191,7 @@
     { category: "Bedroom",          name: "Bed Frame — Full/Double",                       price: 65,  original: 152.99, listing: "https://www.wayfair.com/furniture/pdp/17-stories-tharsiga-bed-frame-w009580236.html?piid=1518619331", image: "https://assets.wfcdn.com/im/08527123/resize-h800-p1-w800%5Ecompr-r85/2186/218685387/Tharsiga+Upholstered+Bed-1518619331.jpg" },
     { category: "Bedroom",          name: "Mattress — 9\" Full XL",                        price: 150, original: 403.74, listing: "https://www.wayfair.com/bed-bath/pdp/white-noise-10-inch-medium-plush-pillowtop-innerspring-mattress-w004342109.html?piid=1062180588%2C996683342", image: "https://assets.wfcdn.com/im/23922989/resize-h800-p1-w800%5Ecompr-r85/4388/438824515/10-Inch+Medium+Plush+Pillowtop+Innerspring+Mattress-1062180588-996683342.jpg" },
     { category: "Others",           name: "PlayStation 5 Console (slim)",                  price: 400, original: 531.24, listing: "https://www.amazon.com/dp/B0CL61F39H", image: "https://m.media-amazon.com/images/I/61OFeihbEZL._SL1500_.jpg" },
-    { category: "Others",           name: "3 x PlayStation DualSense Wireless Controller", price: 50,  original: 238.99, listing: "https://www.amazon.com/dp/B0CQKKNLKH", image: "https://m.media-amazon.com/images/I/61yU5LP9zXL._SL1500_.jpg" },
+    { category: "Others",           name: "2 x PlayStation DualSense Wireless Controller", price: 50,  original: 159.33, listing: "https://www.amazon.com/dp/B0CQKKNLKH", image: "https://m.media-amazon.com/images/I/61yU5LP9zXL._SL1500_.jpg" },
     { category: "Others",           name: "Sunlight Therapy Lamp",                         price: 60,  original: 127.49, listing: "https://www.amazon.com/dp/B00PCN4UVU", image: "https://m.media-amazon.com/images/I/51+VDKV8DaL._AC_SL1500_.jpg" },
     { category: "Others",           name: "Wall Art — Flourish of Spring",                 price: 50,  original: 122.99, listing: "https://www.wayfair.com/decor-pillows/pdp/andover-mills-flourish-of-spring-by-timothy-o-toole-painting-print-on-canvas-w004995523.html?piid=288806472%2C341022279%2C341626477", image: "https://assets.wfcdn.com/im/73296134/resize-h800-p1-w800%5Ecompr-r85/2320/232039390/%22+Flourish+Of+Spring+%22+by+Timothy+O%27+Toole-288806472-341022279-341626477.jpg" },
     { category: "Others",           name: "Trash Can (Brightroom) — 45L Slim Step",        price: 25,  original: 55,     listing: "https://www.target.com/p/45l-slim-step-trash-can-brightroom-8482/-/A-83279849", image: "https://target.scene7.com/is/image/Target/GUEST_274940b3-1047-40c3-aa3a-4c1d8f8a78d2?wid=1200&hei=1200&qlt=80" },
@@ -343,12 +358,14 @@
         const thumb = it.image
           ? `<div class="pick-thumb"><img src="${esc(it.image)}" alt="" loading="lazy" /></div>`
           : `<div class="pick-thumb no-img">No image</div>`;
+        const cls = "pick" + (checked ? " checked" : "") + (it.sold ? " sold" : "");
+        const soldTag = it.sold ? '<span class="pick-sold-tag">SOLD</span>' : `<span class="pick-price">${fmt(it.price)}</span>`;
         return `
-          <label class="pick${checked ? " checked" : ""}">
-            <input type="checkbox" data-name="${esc(it.name)}"${checked ? " checked" : ""} />
+          <label class="${cls}" title="${it.sold ? 'Sold — not available' : esc(it.name)}">
+            <input type="checkbox" data-name="${esc(it.name)}"${checked ? " checked" : ""}${it.sold ? " disabled" : ""} />
             ${thumb}
-            <span class="pick-name" title="${esc(it.name)}">${esc(it.name)}</span>
-            <span class="pick-price">${fmt(it.price)}</span>
+            <span class="pick-name">${esc(it.name)}</span>
+            ${soldTag}
           </label>`;
       }).join("");
       return `
@@ -383,8 +400,10 @@
 
   function renderSummary() {
     const panel = document.getElementById("summary-panel");
+    const available = ITEMS.filter(it => !it.sold);
+    const soldCount = ITEMS.length - available.length;
     const rows = CATEGORIES.map(c => {
-      const items = ITEMS.filter(it => categoryId(it.category) === c.id);
+      const items = available.filter(it => categoryId(it.category) === c.id);
       const sell = items.reduce((s, it) => s + (it.price || 0), 0);
       const orig = items.reduce((s, it) => s + (it.original || 0), 0);
       const save = orig - sell;
@@ -411,6 +430,7 @@
 
     panel.innerHTML = `
       <h2>📊 Summary</h2>
+      ${soldCount > 0 ? `<p class="sub">${soldCount} item${soldCount === 1 ? '' : 's'} already sold — excluded from totals below.</p>` : ''}
 
       <div class="summary-cards">
         <div class="stat"><div class="l">Items</div><div class="v">${tot.count}</div></div>
@@ -493,7 +513,7 @@
     } else {
       items.forEach(it => {
         const card = document.createElement("article");
-        card.className = "card";
+        card.className = "card" + (it.sold ? " sold" : "");
         const d = (it.original && it.price) ? discPct(it.price, it.original) : null;
         const thumbInner = it.image
           ? '<img src="' + esc(it.image) + '" alt="' + esc(it.name) + '" loading="lazy" />'
